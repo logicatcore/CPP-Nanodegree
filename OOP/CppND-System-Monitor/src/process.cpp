@@ -8,6 +8,7 @@
 // addition
 #include "linux_parser.h"
 #include <numeric>
+#include <cmath>
 
 using std::string;
 using std::to_string;
@@ -22,15 +23,19 @@ int Process::Pid() {
     return this->pid_; 
 }
 
-float Process::CpuUtilization() const { 
-    long AJ = LinuxParser::ActiveJiffies(this->pid_);
-    std::vector<float> J = LinuxParser::Jiffies();  
-    long total_cpu_active_jiffies = accumulate(J.begin(), J.end(), 0);
-    if (total_cpu_active_jiffies == 0){
-        return 0;
+float Process::CpuUtilization() { 
+    float NEW_AJ = LinuxParser::ActiveJiffies(this->pid_);
+    std::vector<float> NEW_J = LinuxParser::Jiffies();  
+    float NEW_TOTAL = accumulate(NEW_J.begin(), NEW_J.end(), 0);
+    if ((OLD_TOTAL - NEW_TOTAL) == 0){
+        OLD_AJ = NEW_AJ;
+        return 0.0;
     }
     else {
-        return AJ / total_cpu_active_jiffies; 
+        CPU_UTIL = (float)abs(OLD_AJ - NEW_AJ) / abs(OLD_TOTAL - NEW_TOTAL);  
+        OLD_TOTAL = NEW_TOTAL;
+        OLD_AJ = NEW_AJ;
+        return CPU_UTIL;
     }
 }
 
@@ -49,6 +54,6 @@ string Process::User() {
 long int Process::UpTime() { 
     return LinuxParser::UpTime(this->pid_); 
 }
-bool Process::operator<(Process const& a) const { 
-    return this->CpuUtilization() < a.CpuUtilization(); 
+bool Process::operator<(Process &a) { 
+    return  a.CpuUtilization() < this->CpuUtilization(); 
 }

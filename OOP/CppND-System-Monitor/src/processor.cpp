@@ -3,13 +3,17 @@
 #include "linux_parser.h"
 
 std::vector<float> Processor::Utilization() { 
-    float tmp;
+    float tmp, denominator;
     std::vector<float> percentages, NEW_AJ, NEW_J;
     
     NEW_AJ = LinuxParser::ActiveJiffies();
     NEW_J = LinuxParser::Jiffies();
-    for (size_t i = 0; i < OLD_AJ.size(); i++) {
-        tmp = (float)abs(OLD_AJ[i] - NEW_AJ[i]) / abs(OLD_J[i] - NEW_J[i]);
+    for (size_t i = 0; i < NEW_AJ.size(); i++) {
+        denominator = abs(OLD_J[i] - NEW_J[i]);
+        if (denominator != 0) {
+            tmp = (float)abs(OLD_AJ[i] - NEW_AJ[i]) / denominator;
+        }
+        else tmp = 0;
         percentages.emplace_back(tmp);
     }
     OLD_AJ = NEW_AJ;

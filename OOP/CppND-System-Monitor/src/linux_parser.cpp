@@ -138,11 +138,11 @@ std::vector<float> LinuxParser::Jiffies() {
   return SUM; 
 }
 
-long LinuxParser::ActiveJiffies(int pid) { 
+float LinuxParser::ActiveJiffies(int pid) { 
   string pid_s = "/" + std::to_string(pid);
   std::ifstream pid_info(kProcDirectory + pid_s + kStatFilename);
   string line, block ;
-  long sum{0};
+  float sum{0};
   short count{0};
 
   if (pid_info.is_open()){
