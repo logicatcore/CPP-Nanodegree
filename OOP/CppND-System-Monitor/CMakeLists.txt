@@ -19,8 +19,8 @@ target_link_libraries(monitor ${CURSES_LIBRARIES} ${Boost_LIBRARIES})
 target_compile_options(monitor PRIVATE -Wall -Wextra)
 
 # Add the testing executable
-add_subdirectory(thirdparty/googletest)
+# add_subdirectory(thirdparty/googletest)
 
-add_executable(testt test/utest_monitor.cpp src/linux_parser.cpp src/format.cpp)
+# add_executable(testt test/utest_monitor.cpp src/linux_parser.cpp src/format.cpp)
 
-target_link_libraries(testt gtest_main ${Boost_LIBRARIES})
+# target_link_libraries(testt gtest_main ${Boost_LIBRARIES})
