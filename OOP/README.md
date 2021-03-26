@@ -7,6 +7,7 @@
 2. Sorting of processes based on dynamic CPU utilisation
 3. Code adapts to the number of cores present on a system
 4. build_test and build_debug targets are added to help in testing and debugging
+5. PID folders globber using boost's filesystem library
 
 # To run
 ```shell
