@@ -4,7 +4,7 @@
 
 # Additional features implemented
 1. Dynamic usage of CPU cores
-2. Sorting of processes based on CPU utilisation
+2. Sorting of processes based on dynamic CPU utilisation
 3. Code adapts to the number of cores present on a system
 4. build_test and build_debug targets are added to help in testing and debugging
 
@@ -13,7 +13,7 @@
 $ cd CppND-System-Monitor
 $ make build
 $ ./build/monitor
-# or
+# or, not working on udacity worksapce for some reason
 $ cd CppND-System-Monitor
 $ make build_test # configured to also run tests after a successful build
 $ ./build/monitor
