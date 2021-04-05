@@ -65,25 +65,31 @@ void TrafficLight::cycleThroughPhases()
     std::chrono::high_resolution_clock::time_point end;
     // float cycle_time = 4 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(6-4)));
     int cycle_time = 4 + rand() % (6 - 4);
-    int diff{0};
+    int diff{0}, loop_counter{0};
 
     while (true) {
-        end = std::chrono::high_resolution_clock::now();
-        diff = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
-        // check if cycle duration has been exceeded
-        if (diff >= cycle_time){
-            if (_currentPhase == TrafficLightPhase::red){
-                _messageQueue.send(TrafficLightPhase::green);
-                _currentPhase = TrafficLightPhase::green;
+        // since minimum cycle time is known
+        if (loop_counter >= 4000) {
+            end = std::chrono::high_resolution_clock::now();
+            diff = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+            // check if cycle duration has been exceeded
+            if (diff >= cycle_time){
+                if (_currentPhase == TrafficLightPhase::red){
+                    _messageQueue.send(TrafficLightPhase::green);
+                    _currentPhase = TrafficLightPhase::green;
+                }
+                else{
+                    _messageQueue.send(TrafficLightPhase::red);
+                    _currentPhase = TrafficLightPhase::red;
+                }
+                // update the start and cycle time
+                start = std::chrono::high_resolution_clock::now();
+                cycle_time = 4 + rand() % (6 - 4);
+                // reset counter
+                loop_counter = 0;
             }
-            else{
-                _messageQueue.send(TrafficLightPhase::red);
-                _currentPhase = TrafficLightPhase::red;
-            }
-            // update the start and cycle time
-            start = std::chrono::high_resolution_clock::now();
-            cycle_time = 4 + rand() % (6 - 4);
         }
+        ++loop_counter;
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
