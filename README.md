@@ -8,7 +8,7 @@ This C++ Nanodegree course is a hands-on method of learning C++ programming lang
 * Foundations course
   * Scopped enums
   * Vectors
-  * algorithm standard librayr
+  * algorithm standard library
   * Build systems
   * References v/s Pointers, etc.,
 * Obejct Oriented Programming (OOP) course
@@ -18,7 +18,7 @@ This C++ Nanodegree course is a hands-on method of learning C++ programming lang
   * Abstraction, Encapsulation, Inheritance, Overloading, Polymorphism, and Interfaces
   * Namespaces
   * friends
-  * Intialisers list
+  * Initializer list
   * Static members and methods, etc.,
 * Memory Management
   * RAII (Resource Acquisition is Intialisation)
